@@ -1,0 +1,28 @@
+{
+    "latitude": 1.3708259,
+    "longitude": 103.80237,
+    "generationtime_ms": 0.08726119995117188,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 46.0,
+    "current_weather_units": {
+        "time": "iso8601",
+        "interval": "seconds",
+        "temperature": "\u00b0C",
+        "windspeed": "km/h",
+        "winddirection": "\u00b0",
+        "is_day": "",
+        "weathercode": "wmo code"
+    },
+    "current_weather": {
+        "time": "2026-10-21T18:30",
+        "interval": 900,
+        "temperature": 25.1,
+        "windspeed": 3.5,
+        "winddirection": 345,
+        "is_day": 0,
+        "weathercode": 1
+    },
+    "city_name": "Singapore"
+}
