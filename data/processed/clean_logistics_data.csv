@@ -1,0 +1,6 @@
+city,latitude,longitude,temperature,wind_speed,precipitation,checked_at,transport_status
+Chicago,41.879498,-87.64974,18.6,7.4,0.0,2026-10-21T18:30,Clear
+Durban,-29.841827,30.976744,20.7,8.8,0.0,2026-10-21T18:30,Clear
+Rotterdam,51.916,4.466,11.5,27.0,0.0,2026-10-21T18:30,Clear
+Shanghai,31.247803,121.5,14.7,8.9,0.0,2026-10-21T18:30,Clear
+Singapore,1.3708259,103.80237,25.1,3.5,0.0,2026-10-21T18:30,Clear
