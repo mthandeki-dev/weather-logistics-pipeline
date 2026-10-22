@@ -1,0 +1,53 @@
+## Prerequisites
+* Python 3.x: Ensure Python is installed on your system.
+* PostgreSQL: A local or remote PostgreSQL database instance must be running and accessible.
+
+## 1. Project Setup
+First, create a virtual environment to isolate the project's dependencies and install the required packages.
+
+For Windows:
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+For macOS/Linux:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## 2. Environment Configuration
+The project relies on environment variables to connect to the PostgreSQL database. You must create a file named `.env` in the root directory of the project. 
+
+Create the `.env` file and populate it with your specific database credentials using the following format:
+```env
+DB_USER=your_postgres_username
+DB_PASSWORD=your_postgres_password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=logistics_db
+```
+
+## 3. Running the Pipeline
+The data pipeline is broken into three distinct stages (Extract, Transform, Load) that must be run sequentially.
+
+Step 1: Extract
+Run the extraction script to fetch real-time weather data for the targeted global logistics hubs from the Open-Meteo API. This will save raw JSON files into the `./data/raw` directory.
+```bash
+python extract.py
+```
+
+Step 2: Transform
+Run the transformation script to parse the raw JSON data, apply business logic to flag weather-related logistics risks (like high winds or precipitation), and consolidate the records. This outputs a cleaned CSV file (`clean_logistics_data.csv`) into the `./data/processed` directory.
+```bash
+python transform.py
+```
+
+Step 3: Load
+Run the load script to read the processed CSV data and append it to the `fact_weather_logistics` table in your configured PostgreSQL database. 
+```bash
+python load.py
+```
