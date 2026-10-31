@@ -19,6 +19,7 @@ os.makedirs(RAW_DATA_DIR, exist_ok=True)
 
 def extract_weather_data():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    failures = []
 
     for city, (lat, lon) in TARGET_CITIES.items():
         print(f"Fetching data for {city}...")
@@ -33,7 +34,7 @@ def extract_weather_data():
         }
 
         try:
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=params, timeout=30)
             response.raise_for_status()  # Check for HTTP errors
             data = response.json()
 
@@ -47,8 +48,13 @@ def extract_weather_data():
 
             print(f"Successfully saved raw data to {filename}")
 
-        except Exception as e:
+        except requests.RequestException as e:
             print(f"Failed to fetch data for {city}: {e}")
+            failures.append(city)
+
+    if failures:
+        failed_cities = ", ".join(failures)
+        raise RuntimeError(f"Weather extraction failed for: {failed_cities}")
 
 
 if __name__ == "__main__":

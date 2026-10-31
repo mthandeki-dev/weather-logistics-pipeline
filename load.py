@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
 from sqlalchemy.exc import OperationalError
 from dotenv import load_dotenv
 
@@ -19,13 +20,10 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
+DB_SSLMODE = os.getenv("DB_SSLMODE")
 
 # The Database URL format for SQLAlchemy is:
 # postgresql://username:password@host:port/database_name
-
-DATABASE_URL = (
-    f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-)
 
 #The path for the processed data file that will be loaded into PostgreSQL
 PROCESSED_DATA_DIR = "./data/processed"
@@ -38,8 +36,7 @@ INPUT_FILE = f"{PROCESSED_DATA_DIR}/clean_logistics_data.csv"
 def load_data_to_postgres():
     # 1. Check if the processed data file exists
     if not os.path.exists(INPUT_FILE):
-        print(f"Error: {INPUT_FILE} not found. Run transform.py first.")
-        return
+        raise FileNotFoundError(f"{INPUT_FILE} not found. Run transform.py first.")
 
     # 2. Read the cleaned CSV back into a Pandas DataFrame
     print(f"Reading data from {INPUT_FILE}...")
@@ -55,11 +52,18 @@ def load_data_to_postgres():
     if not port.isdigit():
         raise ValueError(f"Invalid DB_PORT value: {DB_PORT!r}. Must be an integer.")
 
-    # Rebuild DATABASE_URL with the validated port
-    validated_url = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{port}/{DB_NAME}"
+    database_url = URL.create(
+        "postgresql",
+        username=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        port=int(port),
+        database=DB_NAME,
+        query={"sslmode": DB_SSLMODE} if DB_SSLMODE else {},
+    )
 
     try:
-        engine = create_engine(validated_url)
+        engine = create_engine(database_url)
     except Exception as exc:
         print(f"Failed to create database engine: {exc}")
         raise
@@ -79,8 +83,9 @@ def load_data_to_postgres():
         print("Database operational error while writing data:", oe)
         print("Possible causes: wrong DB credentials, Postgres not running, or pg_hba.conf rejecting authentication.")
         print("Remediation options:")
-        print(" - Verify `config.env` credentials match the Postgres instance.")
-        print(" - If you intend to use the Docker Postgres, run: docker-compose up -d")
+        print(" - Verify the `.env` credentials match the Postgres instance.")
+        print(" - For Aiven, set `DB_SSLMODE=require` in `.env`.")
+        print(" - For Docker Postgres, run: docker compose up -d")
         print(" - To reset the `postgres` user's password on the host Postgres: ")
         print("     sudo -u postgres psql -c \"ALTER USER postgres WITH PASSWORD 'your_password';\"")
         print(" - If Postgres uses different auth, update /etc/postgresql/*/main/pg_hba.conf accordingly and restart Postgres.")

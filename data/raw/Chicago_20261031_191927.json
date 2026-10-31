@@ -1,0 +1,28 @@
+{
+    "latitude": 41.879498,
+    "longitude": -87.64974,
+    "generationtime_ms": 0.2626180648803711,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 241.0,
+    "current_weather_units": {
+        "time": "iso8601",
+        "interval": "seconds",
+        "temperature": "\u00b0C",
+        "windspeed": "km/h",
+        "winddirection": "\u00b0",
+        "is_day": "",
+        "weathercode": "wmo code"
+    },
+    "current_weather": {
+        "time": "2026-10-31T17:15",
+        "interval": 900,
+        "temperature": 13.4,
+        "windspeed": 11.7,
+        "winddirection": 141,
+        "is_day": 1,
+        "weathercode": 3
+    },
+    "city_name": "Chicago"
+}

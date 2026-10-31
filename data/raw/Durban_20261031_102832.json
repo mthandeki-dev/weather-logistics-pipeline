@@ -1,0 +1,28 @@
+{
+    "latitude": -29.841827,
+    "longitude": 30.976744,
+    "generationtime_ms": 0.18143653869628906,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 25.0,
+    "current_weather_units": {
+        "time": "iso8601",
+        "interval": "seconds",
+        "temperature": "\u00b0C",
+        "windspeed": "km/h",
+        "winddirection": "\u00b0",
+        "is_day": "",
+        "weathercode": "wmo code"
+    },
+    "current_weather": {
+        "time": "2026-10-31T08:15",
+        "interval": 900,
+        "temperature": 24.5,
+        "windspeed": 15.6,
+        "winddirection": 51,
+        "is_day": 1,
+        "weathercode": 1
+    },
+    "city_name": "Durban"
+}

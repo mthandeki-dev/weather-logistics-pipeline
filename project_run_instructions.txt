@@ -29,10 +29,36 @@ DB_PASSWORD=your_postgres_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=logistics_db
+DB_SSLMODE=require
 ```
 
+For Aiven PostgreSQL, copy the host, port, database name, user, and password
+from the service connection details, and keep `DB_SSLMODE=require`. Do not
+commit the `.env` file or share its password. Docker is not needed when using
+your Aiven database.
+
 ## 3. Running the Pipeline
-The data pipeline is broken into three distinct stages (Extract, Transform, Load) that must be run sequentially.
+The data pipeline has three sequential stages (Extract, Transform, Load). To run
+all stages automatically on Windows, open PowerShell in the project directory
+and run:
+```powershell
+.\run_pipeline.ps1
+```
+
+The script uses `.venv\Scripts\python.exe` when the project virtual environment
+exists; otherwise, it uses `python` from your PATH. It stops if any stage fails.
+If PowerShell blocks the script, run it for the current terminal session with:
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\run_pipeline.ps1
+```
+
+On macOS/Linux, run the Bash version:
+```bash
+bash ./run_pipeline.sh
+```
+
+You can also run the three steps individually:
 
 Step 1: Extract
 Run the extraction script to fetch real-time weather data for the targeted global logistics hubs from the Open-Meteo API. This will save raw JSON files into the `./data/raw` directory.
@@ -50,4 +76,11 @@ Step 3: Load
 Run the load script to read the processed CSV data and append it to the `fact_weather_logistics` table in your configured PostgreSQL database. 
 ```bash
 python load.py
+```
+
+On Windows PowerShell, run each stage from the project directory:
+```powershell
+python .\extract.py
+python .\transform.py
+python .\load.py
 ```

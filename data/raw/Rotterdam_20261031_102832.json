@@ -1,0 +1,28 @@
+{
+    "latitude": 51.916,
+    "longitude": 4.466,
+    "generationtime_ms": 0.09238719940185547,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 2.0,
+    "current_weather_units": {
+        "time": "iso8601",
+        "interval": "seconds",
+        "temperature": "\u00b0C",
+        "windspeed": "km/h",
+        "winddirection": "\u00b0",
+        "is_day": "",
+        "weathercode": "wmo code"
+    },
+    "current_weather": {
+        "time": "2026-10-31T08:15",
+        "interval": 900,
+        "temperature": 7.1,
+        "windspeed": 9.0,
+        "winddirection": 88,
+        "is_day": 1,
+        "weathercode": 3
+    },
+    "city_name": "Rotterdam"
+}

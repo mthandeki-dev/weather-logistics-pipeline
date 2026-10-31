@@ -21,8 +21,9 @@ def transform_raw_data():
     json_files = glob.glob(f"{RAW_DATA_DIR}/*.json")
 
     if not json_files:
-        print("No raw data files found to transform.")
-        return
+        raise FileNotFoundError(
+            f"No raw data files found in {RAW_DATA_DIR}. Run extract.py first."
+        )
 
     all_records = []
 
